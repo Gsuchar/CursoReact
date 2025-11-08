@@ -13,7 +13,7 @@ const ItemListContainer = () => {
         setProducts(products);
       })
       .catch(error => {
-        console.error('Error fetching products:', error);
+        console.error('Error obteniendo products:', error);
       })
       .finally(() => {
         setLoading(false);
