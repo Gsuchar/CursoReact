@@ -98,3 +98,52 @@ nav .links a:hover {
 }
 
 
+/* ITEM LIST CONTAINER */
+.item-list-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card-prod {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-prod img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.card-prod h2 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.card-prod p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.card-prod button {
+  padding: 10px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card-prod button:hover {
+  background-color: #e65c00;
+}
+

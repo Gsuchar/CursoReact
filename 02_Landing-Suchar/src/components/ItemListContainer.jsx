@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import CardProd from './CardProd';
 
+
+
 const ItemListContainer = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ const ItemListContainer = () => {
         setProducts(products);
       })
       .catch(error => {
-        setNotification('error', 'Fallo');
+        console.error('Error fetching products:', error);
       })
       .finally(() => {
         setLoading(false);
@@ -34,39 +36,30 @@ const ItemListContainer = () => {
   );
 };
 
-export default ItemListContainer;
-
-
-
-/*import React from 'react';
-
-const ItemListContainer = ({  }) => {
-
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchProds().then(products => {
-      setProducts(products);
-    }).catch(error => {
-      setNotification('error', 'Fallo');
-    }).finally(() => {
-      setLoading(false);
-    });
-  }, []);
-
-  return (
-    <div className="item-list-container">
-      <h1></h1>
-      {loading ? (
-        <h3>Cargando productos...</h3>
-      ) : (
-        <TaskList products={products} onCompleted={handleClick} />
-      )}
-    </div>
-  );
-
-
+const fetchProds = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(productsData);
+    }, 2000);
+  });
 };
 
-export default ItemListContainer;*/
+const productsData = [
+  {
+    id: 1,
+    name: 'Producto 1',
+    description: 'Descripción del producto 1',
+    price: 100,
+    imageUrl: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 2,
+    name: 'Producto 2',
+    description: 'Descripción del producto 2',
+    price: 200,
+    imageUrl: 'https://via.placeholder.com/150',
+  },
+];
+
+export default ItemListContainer;
+
