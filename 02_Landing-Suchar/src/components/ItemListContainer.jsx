@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getProducts } from '../api/products';
 import CardProd from './CardProd';
 
 const ItemListContainer = ({ greeting }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { categoryId } = useParams();
 
   useEffect(() => {
     setLoading(true);
-    getProducts(categoryId)
+    getProducts()
       .then(products => {
         setProducts(products);
       })
@@ -20,12 +19,11 @@ const ItemListContainer = ({ greeting }) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [categoryId]);
+  }, []);
 
   return (
     <div className="item-list-container">
       <h1>{greeting}</h1>
-      <h2>{categoryId && `Categoría: ${categoryId}`}</h2>
       {loading ? (
         <h3>Cargando productos...</h3>
       ) : (

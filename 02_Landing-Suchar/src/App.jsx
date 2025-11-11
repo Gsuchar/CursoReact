@@ -9,8 +9,8 @@ const App = () => {
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route path="/" element={<ItemListContainer greeting="Todos nuestros productos" />} />
-        <Route path="/category/:categoryId" element={<ItemListContainer greeting="Productos filtrados" />} />
+        <Route path="/" element={<ItemListContainer greeting="Bienvenidos" />} />
+        <Route path="/products" element={<ItemListContainer greeting="Todos nuestros productos" />} />
         <Route path="/item/:itemId" element={<ItemDetailContainer />} />
         <Route path="*" element={<h1>404 NOT FOUND</h1>} />
       </Routes>
