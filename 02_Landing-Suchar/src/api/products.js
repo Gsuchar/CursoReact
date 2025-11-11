@@ -1,3 +1,5 @@
+import newImage from '../assets/img/img.png';
+
 const productsData = [
   {
     id: '1',
@@ -5,7 +7,7 @@ const productsData = [
     description: 'Descripción del producto 1',
     price: 100,
     stock: 10,
-    imageUrl: 'https://via.placeholder.com/150',
+    imageUrl: newImage,
   },
   {
     id: '2',
@@ -13,7 +15,7 @@ const productsData = [
     description: 'Descripción del producto 2',
     price: 200,
     stock: 10,
-    imageUrl: 'https://via.placeholder.com/150',
+    imageUrl: newImage,
   },
   {
     id: '3',
@@ -21,7 +23,7 @@ const productsData = [
     description: 'Descripción del producto 3',
     price: 300,
     stock: 10,
-    imageUrl: 'https://via.placeholder.com/150',
+    imageUrl: newImage,
   },
 ];
 
