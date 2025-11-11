@@ -7,8 +7,6 @@ const CardProd = ({ product }) => {
       <h2>{product.name}</h2>
       <p>{product.description}</p>
       <p><strong>Precio: </strong>$ {product.price}</p>
-      <button>Comprar</button>
-      <button>Detalles</button>
     </div>
   );
 };

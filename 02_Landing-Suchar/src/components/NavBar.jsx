@@ -1,14 +1,23 @@
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import CartWidget from './CartWidget';
 
 const NavBar = () => {
   return (
     <nav>
-      <div className="logo">Tiendita Reactiva</div>
+      <Link to="/" className="logo">
+        Tiendita Reactiva
+      </Link>
       <div className="links">
-        <a href="#inicio">Inicio</a>
-        <a href="#productos">Productos</a>
-        <a href="#contacto">Contacto</a>
+        <NavLink to="/" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+          Inicio
+        </NavLink>
+        <NavLink to="/" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+          Productos
+        </NavLink>
+        <NavLink to="/contacto" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+          Conctacto
+        </NavLink>
       </div>
       <CartWidget />
     </nav>

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { getProducts } from '../api/products';
 import CardProd from './CardProd';
 
-
-
-const ItemListContainer = () => {
+const ItemListContainer = ({ greeting }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { categoryId } = useParams();
 
   useEffect(() => {
-    fetchProds()
+    setLoading(true);
+    getProducts(categoryId)
       .then(products => {
         setProducts(products);
       })
@@ -18,48 +20,26 @@ const ItemListContainer = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [categoryId]);
 
   return (
     <div className="item-list-container">
-      <h1>Lista de productos</h1>
+      <h1>{greeting}</h1>
+      <h2>{categoryId && `Categoría: ${categoryId}`}</h2>
       {loading ? (
         <h3>Cargando productos...</h3>
       ) : (
         <div className="product-list">
           {products.map((product) => (
-            <CardProd key={product.id} product={product} />
+            <Link to={`/item/${product.id}`} key={product.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <CardProd product={product} />
+            </Link>
           ))}
         </div>
       )}
     </div>
   );
 };
-
-const fetchProds = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(productsData);
-    }, 2000);
-  });
-};
-
-const productsData = [
-  {
-    id: 1,
-    name: 'Producto 1',
-    description: 'Descripción del producto 1',
-    price: 100,
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 2,
-    name: 'Producto 2',
-    description: 'Descripción del producto 2',
-    price: 200,
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-];
 
 export default ItemListContainer;
 
