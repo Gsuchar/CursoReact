@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"; // Importa los módulos de Firestore
+import { db } from '../firebase/config'; // Importa la instancia de Firestore
 
 const Checkout = () => {
   const { cart, totalPrice, clearCart } = useCart();
@@ -9,12 +11,12 @@ const Checkout = () => {
   const [email, setEmail] = useState('');
   const [orderId, setOrderId] = useState('');
   const [loading, setLoading] = useState(false);
+  const [confirmedOrder, setConfirmedOrder] = useState(null); // Nuevo estado para guardar la orden confirmada
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => { 
     e.preventDefault();
     setLoading(true);
 
-    // Simula una creacion de orden/ticket, para ponerle darle un toque mas, no hice la coleccion en bd
     const order = {
       buyer: { name, phone, email },
       items: cart.map(item => ({
@@ -24,16 +26,20 @@ const Checkout = () => {
         price: item.price,
       })),
       total: totalPrice,
-      date: new Date(),
+      date: serverTimestamp(), // Timestamp del servidor de Firestore, menos kilombo
     };
 
-    // Simula order ID pa mostrar algo
-    setTimeout(() => {
-      const generatedOrderId = 'ORD-' + Math.random().toString(36).substring(2, 11).toUpperCase();
-      setOrderId(generatedOrderId);
-      clearCart(); 
+    try {
+      const docRef = await addDoc(collection(db, "orders"), order);
+      setOrderId(docRef.id); // ID de la orden
+      setConfirmedOrder(order); // Guarda los detalles de la orden confirmada
+      clearCart();
+    } catch (error) {
+      console.error("Error al crear la orden: ", error);
+     
+    } finally {
       setLoading(false);
-    }, 2000); // una demoradita para pa que no sea instantaneo
+    }
   };
 
   if (loading) {
@@ -47,11 +53,14 @@ const Checkout = () => {
     );
   }
 
-  if (orderId) {
+  if (orderId && confirmedOrder) { // Asegúrate de que confirmedOrder también exista
     return (
       <div className="container mt-5 text-center">
-        <h1>¡Gracias por tu compra!</h1>
+        <h1>¡Gracias por tu compra, {confirmedOrder.buyer.name}!</h1>
         <p>Tu número de orden es: <strong>{orderId}</strong></p>
+        <p>Email: {confirmedOrder.buyer.email}</p>
+        <p>Teléfono: {confirmedOrder.buyer.phone}</p>
+        <p>Total de la compra: <strong>${confirmedOrder.total}</strong></p>
         <Link to="/" className="btn btn-primary">Volver al inicio</Link>
       </div>
     );
