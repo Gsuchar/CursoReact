@@ -17,19 +17,30 @@ function ItemDetail({ item }) {
   };
 
   return (
-    <div>
-      <img src={item.imageUrl} alt={item.name} />
-      <h2>{item.name}</h2>
-      <p>{item.description}</p>
-      <p>Precio: ${item.price}</p>
-      <p>Stock disponible: {item.stock}</p>
-      {
-        quantityAdded > 0 ? (
-          <Link to='/cart' className='btn btn-success'>Terminar mi compra</Link>
-        ) : (
-          <ItemCount initial={1} stock={item.stock} onAdd={handleOnAdd} />
-        )
-      }
+    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
+      <img 
+        src={item.imageUrl} 
+        alt={item.name} 
+        style={{
+          maxWidth: '400px',
+          maxHeight: '800px',
+          width: 'auto',
+          height: 'auto',
+        }}
+      />
+      <div>
+        <h2>{item.name}</h2>
+        <p>{item.description}</p>
+        <p>Precio: ${item.price}</p>
+        <p>Stock disponible: {item.stock}</p>
+        {
+          quantityAdded > 0 ? (
+            <Link to='/cart' className='btn btn-success'>Terminar mi compra</Link>
+          ) : (
+            <ItemCount initial={1} stock={item.stock} onAdd={handleOnAdd} />
+          )
+        }
+      </div>
     </div>
   );
 }

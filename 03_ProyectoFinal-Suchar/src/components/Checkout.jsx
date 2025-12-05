@@ -14,7 +14,7 @@ const Checkout = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate order creation (replace with actual Firebase logic later)
+    // Simula una creacion de orden/ticket, para ponerle darle un toque mas, no hice la coleccion en bd
     const order = {
       buyer: { name, phone, email },
       items: cart.map(item => ({
@@ -27,13 +27,13 @@ const Checkout = () => {
       date: new Date(),
     };
 
-    // Simulate async operation and generate a fake order ID
+    // Simula order ID pa mostrar algo
     setTimeout(() => {
       const generatedOrderId = 'ORD-' + Math.random().toString(36).substring(2, 11).toUpperCase();
       setOrderId(generatedOrderId);
-      clearCart(); // Clear cart after successful order
+      clearCart(); 
       setLoading(false);
-    }, 2000); // Simulate network delay
+    }, 2000); // una demoradita para pa que no sea instantaneo
   };
 
   if (loading) {
@@ -52,7 +52,6 @@ const Checkout = () => {
       <div className="container mt-5 text-center">
         <h1>¡Gracias por tu compra!</h1>
         <p>Tu número de orden es: <strong>{orderId}</strong></p>
-        <p>Pronto recibirás un correo con los detalles de tu pedido.</p>
         <Link to="/" className="btn btn-primary">Volver al inicio</Link>
       </div>
     );

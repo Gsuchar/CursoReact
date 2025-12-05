@@ -1,44 +1,20 @@
-import newImage from '../assets/img/img.png';
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { db } from '../firebase/config';
 
-const productsData = [
-  {
-    id: '1',
-    name: 'Producto 1',
-    description: 'Descripción del producto 1',
-    price: 100,
-    stock: 10,
-    imageUrl: newImage,
-  },
-  {
-    id: '2',
-    name: 'Producto 2',
-    description: 'Descripción del producto 2',
-    price: 200,
-    stock: 10,
-    imageUrl: newImage,
-  },
-  {
-    id: '3',
-    name: 'Producto 3',
-    description: 'Descripción del producto 3',
-    price: 300,
-    stock: 10,
-    imageUrl: newImage,
-  },
-];
-
-export const getProducts = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(productsData);
-    }, 500);
-  });
+export const getProducts = async () => {
+  const querySnapshot = await getDocs(collection(db, "products"));
+  const products = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  return products;
 };
 
-export const getProductById = (productId) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(productsData.find(prod => prod.id === productId));
-    }, 500);
-  });
+export const getProductById = async (productId) => {
+  const docRef = doc(db, "products", productId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() };
+  } else {
+    console.log("Fallo al buscar producto.");
+    return null;
+  }
 };

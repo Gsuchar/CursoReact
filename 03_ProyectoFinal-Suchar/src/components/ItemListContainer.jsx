@@ -8,17 +8,19 @@ const ItemListContainer = ({ greeting }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    getProducts()
-      .then(products => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const products = await getProducts();
         setProducts(products);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error obteniendo products:', error);
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   return (

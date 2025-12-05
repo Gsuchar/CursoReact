@@ -10,26 +10,28 @@ function ItemDetailContainer() {
   const { itemId } = useParams();
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-    getProductById(itemId)
-      .then((data) => {
+    const fetchProduct = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await getProductById(itemId);
         if (data) {
           setItem(data);
         } else {
           setError('El producto no fue encontrado.');
         }
-      })
-      .catch(() => {
+      } catch {
         setError('Ocurrió un error al cargar el producto.');
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchProduct();
   }, [itemId]);
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: '20px', margin: '20px' }}>
+    <div className="item-detail-container-wrapper">
       <h2>Detalle del Producto</h2>
       {loading && <p>Cargando detalles del producto...</p>}
       {!loading && error && <p>{error}</p>}
