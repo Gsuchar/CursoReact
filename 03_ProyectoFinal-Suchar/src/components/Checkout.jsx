@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"; // Importa los módulos de Firestore
-import { db } from '../firebase/config'; // Importa la instancia de Firestore
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"; 
+import { db } from '../firebase/config'; 
 
 const Checkout = () => {
   const { cart, totalPrice, clearCart } = useCart();
